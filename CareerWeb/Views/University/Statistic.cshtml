@@ -1,0 +1,151 @@
+﻿@using Model.Dao
+@{
+    var Language = new UserForeignLanguageDao();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="chart.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <script src="https://kit.fontawesome.com/cf01f2dc2a.js" crossorigin="anonymous"></script>
+    <link href="~/Assets/Client/Css/University/Statistic.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="uni-subheader">
+            <span class="banner"></span>
+        </div>
+        <div class="main-content">
+            <div class="container">
+                <div class="row">
+
+                    <div class="uni-info">
+                        <span class="img-thumbnail">
+                            <img scr="">
+                        </span>
+                        <div style="margin-left: 230px;padding-top: 5px">
+                            <h2 id="uni-name"> UET UNIVERSITY</h2>
+                            <div class="uni-info-option">
+                                <i class="fa fa-map-marker"></i> Địa chỉ: DHQGHN, 136 Xuan Thuy, Cau Giay, Ha Noi
+
+
+                                @foreach (var item in ViewBag.InfoUni)
+                                {
+                                    <div class="uni-info">
+                                        <div class="img-thumbnail">
+                                            <span class="img-thumbnail">
+                                                <img scr="@item.UniversityLogo">
+                                            </span>
+
+                                        </div>
+                                        <div style="margin-left: 230px;padding-top: 5px">
+                                            <h2 id="uni-name"> @item.UniversityName</h2>
+                                            <div class="uni-info-option">
+                                                <i class="fa fa-map-marker"></i> Địa chỉ: @item.Address
+                                            </div>
+                                            <div id="Website">
+                                                <i class="fa fa-globe"></i>
+                                                <a href="https://uet.vnu.edu.vn/" target="_blank">Website: https://uet.vnu.edu.vn/</a>
+                                            </div>
+                                            <div id="email"><i class="fas fa-envelope"></i> Email: @item.Email</div>
+                                            <div id="hotline"><i class="fas fa-phone-square-alt"></i> Hotline: @item.Mobile</div>
+                                            <div id="descrip">@item.Description</div>
+                                            <a href="/ListOfStudent/@item.University" class="uni-overview">
+                                                <i class="fa fa-chart-bar"></i>
+                                                <span>  Danh sách sinh viên</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                            <h2 style="width: 100%; margin: 30px 0;">Báo cáo thống kê theo:</h2>
+                            <div style="width: 100%;margin-bottom: 30px;">
+
+                                <label for="skill">Kỹ năng</label>
+
+
+                            </div>
+
+                            @foreach (var item in ViewBag.count)
+                            {
+
+
+                                <div id="@item.ID" data-id="@item.countOfLanguage"> </div>
+
+
+
+                            }
+                            <div class="chart-content" id="c1">
+                                <div id="piechart_3d-skill" style="width: 500px; height: 500px;"></div>
+                            </div>
+
+                            <div class="chart-content" id="c2">
+                                <div id="line_chart-skill" style="width: 500px; height: 500px;"></div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawChart1);
+
+
+
+        function drawChart1() {
+            // Tạo data table
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Foreign Language');
+            data.addColumn('number', 'Total');
+            var anh = Number(document.getElementById("1").getAttribute("data-id"))
+            var trung = Number(document.getElementById("2").getAttribute("data-id"))
+            var nhat = Number(document.getElementById("3").getAttribute("data-id"))
+            var han = Number(document.getElementById("4").getAttribute("data-id"))
+            var duc = Number(document.getElementById("5").getAttribute("data-id"))
+            var nga = Number(document.getElementById("6").getAttribute("data-id"))
+            var latinh = Number(document.getElementById("7").getAttribute("data-id"))
+            var phap = Number(document.getElementById("8").getAttribute("data-id"))
+            data.addRows([
+                ['Tiếng Anh', anh],
+                ['Tiếng Trung',trung],
+                ['Tiếng Nhật', nhat],
+                ['Tiếng Hàn', han],
+                ['Tiếng Đức', duc],
+                ['Tiếng Nga', nga],
+                ['Tiếng LaTinh', latinh],
+                ['Tiếng Pháp', phap]
+
+
+            ]);
+
+            var options = {
+                title: 'Ngoại ngữ',
+                legend: { position: 'bottom' },
+
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart_3d-skill'));
+            chart.draw(data, options);
+        }
+
+
+
+
+
+                </script>
+</body>
+</html>
+
